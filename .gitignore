@@ -1,0 +1,28 @@
+# ===== IDE & Editor =====
+.vscode/
+.idea/
+*.iml
+*.code-workspace
+
+# ===== OS Files =====
+.DS_Store
+Thumbs.db
+
+# ===== Python / Node =====
+__pycache__/
+*.pyc
+node_modules/
+
+# ===== Docker =====
+*.log
+*.tmp
+*.pid
+.docker/
+docker-compose.override.yml
+
+# ===== Data / Logs =====
+data/
+logs/
+tmp/
+.env
+.env.local
