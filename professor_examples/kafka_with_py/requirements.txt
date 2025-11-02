@@ -1,5 +1,0 @@
-#kafka-python
-kafka-python-ng
-#confluent_kafka
-httpx
-atproto
