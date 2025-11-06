@@ -1,6 +1,6 @@
 # Apache Kafka – Streams
 
-**Kafka Streams** è una libreria client sviluppata per la creazione di applicazioni e microservizi **real-time**, in cui i dati di input e/o output sono memorizzati in cluster **Apache Kafka**.  
+**Kafka Streams** è una libreria client sviluppata per la creazione di applicazioni e microservizi **real-time**, in cui i dati di input e/o output sono memorizzati in cluster **Apache Kafka**.
 Essa combina la semplicità di sviluppo e distribuzione delle applicazioni **Java** e **Scala** con la potenza e l’affidabilità della tecnologia di clustering di Kafka, permettendo di realizzare applicazioni **scalabili, elastiche, fault-tolerant e distribuite**.
 
 ---
@@ -9,7 +9,7 @@ Essa combina la semplicità di sviluppo e distribuzione delle applicazioni **Jav
 
 ### 1. Libreria client integrabile
 
-Kafka Streams è progettata come una **libreria client semplice e leggera**, facilmente integrabile in qualsiasi applicazione Java.  
+Kafka Streams è progettata come una **libreria client semplice e leggera**, facilmente integrabile in qualsiasi applicazione Java.
 Può essere aggiunta al progetto come una normale dipendenza Maven:
 
 ```xml
@@ -26,10 +26,10 @@ Grazie a questa architettura, non richiede server o componenti separati: il codi
 
 ### 2. Architettura standalone (autonoma)
 
-Kafka Streams **non dipende da sistemi esterni** oltre a Kafka stesso, che funge da livello di messaggistica interna.  
+Kafka Streams **non dipende da sistemi esterni** oltre a Kafka stesso, che funge da livello di messaggistica interna.
 Utilizza il modello di **partizionamento** di Kafka per scalare orizzontalmente l’elaborazione, mantenendo al contempo forti garanzie di **ordinamento** dei dati.
 
-![11.png](image/11.png)
+![11.png](images/11.png)
 
 Questa autonomia rende la libreria altamente portabile e adatta a contesti di produzione distribuiti.
 
@@ -37,10 +37,10 @@ Questa autonomia rende la libreria altamente portabile e adatta a contesti di pr
 
 ### 3. Fault Tolerance (Tolleranza ai guasti)
 
-Kafka Streams supporta lo **stato locale fault-tolerant**, che permette di eseguire operazioni **stateful** (come join, aggregazioni e windowing) in modo rapido ed efficiente.  
+Kafka Streams supporta lo **stato locale fault-tolerant**, che permette di eseguire operazioni **stateful** (come join, aggregazioni e windowing) in modo rapido ed efficiente.
 Lo stato è mantenuto su ogni singola macchina tramite **RocksDB**, mentre i **Kafka topics** vengono utilizzati per il **backup** e la **replicazione** dello stato.
 
-![12.pmg](image/12.png)
+![12.pmg](images/12.png)
 
 In caso di guasto di un’istanza, il sistema è in grado di ripristinare rapidamente lo stato, garantendo la **continuità dell’elaborazione** e la **consistenza dei dati**.
 
@@ -50,7 +50,7 @@ In caso di guasto di un’istanza, il sistema è in grado di ripristinare rapida
 
 Kafka Streams supporta la semantica di elaborazione **“exactly-once”**, garantendo che ogni record venga elaborato **una sola volta**, anche in caso di errori durante l’elaborazione da parte dei client o dei broker Kafka.
 
-![13.png](image/13.png)
+![13.png](images/13.png)
 
 Questo meccanismo riduce drasticamente il rischio di duplicazione o perdita dei messaggi, assicurando un comportamento coerente e affidabile anche in ambienti distribuiti.
 
@@ -58,10 +58,10 @@ Questo meccanismo riduce drasticamente il rischio di duplicazione o perdita dei 
 
 ### 5. Elaborazione record-by-record
 
-Kafka Streams utilizza un modello di **elaborazione record-per-record**, che consente una **latenza di elaborazione di pochi millisecondi**.  
+Kafka Streams utilizza un modello di **elaborazione record-per-record**, che consente una **latenza di elaborazione di pochi millisecondi**.
 Supporta inoltre operazioni di **windowing basate sul tempo dell’evento**, anche in presenza di record che arrivano **fuori ordine**.
 
-![14.png](image/14.png)
+![14.png](images/14.png)
 
 Questa caratteristica è cruciale per scenari real-time in cui la tempestività e la precisione dei dati sono fondamentali.
 
@@ -69,7 +69,7 @@ Questa caratteristica è cruciale per scenari real-time in cui la tempestività 
 
 ### 6. Primitivi e API
 
-Kafka Streams offre un set di **primitive di elaborazione dei flussi**, che include sia un **DSL (Domain Specific Language)** di alto livello, sia una **API di basso livello** per un controllo più fine sull’elaborazione.  
+Kafka Streams offre un set di **primitive di elaborazione dei flussi**, che include sia un **DSL (Domain Specific Language)** di alto livello, sia una **API di basso livello** per un controllo più fine sull’elaborazione.
 Queste API permettono di definire facilmente flussi complessi di trasformazioni, aggregazioni e join.
 
 ---
@@ -78,7 +78,7 @@ Queste API permettono di definire facilmente flussi complessi di trasformazioni,
 
 Il **New York Times** utilizza Apache Kafka e Kafka Streams per archiviare e distribuire, in tempo reale, i contenuti pubblicati alle varie applicazioni e ai sistemi che li rendono disponibili ai lettori.
 
-![15.png](image/15.png)
+![15.png](images/15.png)
 
 ### Esempi
 
@@ -119,51 +119,53 @@ mon.serialization.LongDeserializer
 
 # Use "All streams lead to Kafka" followed by "Hello kafka streams"
 ```
-![16.png](image/16.png)
+
+![16.png](images/16.png)
 
 ## Concetti fondamentali
 
 ### 1. Topologia di elaborazione dei flussi
 
-Uno **stream** è l’astrazione principale fornita da Kafka Streams: rappresenta un set di dati **illimitato e continuamente aggiornato**.  
+Uno **stream** è l’astrazione principale fornita da Kafka Streams: rappresenta un set di dati **illimitato e continuamente aggiornato**.
 Uno stream è una **sequenza ordinata, riproducibile e fault-tolerant** di record di dati immutabili, dove ogni record è definito come una **coppia chiave-valore** (`key-value`).
 
-Un’**applicazione di elaborazione di flussi** è qualsiasi programma che utilizza la libreria **Kafka Streams**.  
+Un’**applicazione di elaborazione di flussi** è qualsiasi programma che utilizza la libreria **Kafka Streams**.
 Essa definisce la propria logica computazionale tramite una o più **topologie di processori**, dove una topologia è un **grafo diretto di nodi (processori di flusso)** collegati da **archi (flussi di dati)**.
 
-Un **processore di flusso** è un nodo nella topologia:  
-- riceve un record di input dai processori upstream;  
-- applica un’operazione (trasformazione, filtro, join, ecc.);  
-- genera uno o più record di output inviandoli ai processori downstream.  
+Un **processore di flusso** è un nodo nella topologia:
+
+- riceve un record di input dai processori upstream;
+- applica un’operazione (trasformazione, filtro, join, ecc.);
+- genera uno o più record di output inviandoli ai processori downstream.
 
 In altre parole, ogni processore rappresenta una fase di trasformazione del flusso, e l’intera topologia descrive la pipeline completa di elaborazione dei dati.
 
-![Stream Processing Topology](image/17.png)
+![Stream Processing Topology](images/17.png)
 
 ---
 
 ### 2. Dualità tra flussi e tabelle
 
-Nella pratica, la maggior parte dei casi d’uso dell’elaborazione di flussi richiede **sia flussi che tabelle**.  
+Nella pratica, la maggior parte dei casi d’uso dell’elaborazione di flussi richiede **sia flussi che tabelle**.
 Ad esempio, in un’applicazione di e-commerce, un flusso di **transazioni clienti** può essere **arricchito** con le informazioni aggiornate provenienti da una **tabella di clienti**.
 
 Kafka Streams introduce una potente astrazione che mostra come **flussi e tabelle siano due rappresentazioni dello stesso concetto di dati nel tempo**.
 
 #### • Stream come tabella
 
-Uno stream può essere interpretato come il **changelog di una tabella**, dove ogni record rappresenta una modifica di stato (update, insert, delete).  
+Uno stream può essere interpretato come il **changelog di una tabella**, dove ogni record rappresenta una modifica di stato (update, insert, delete).
 Riproducendo lo stream dall’inizio, è possibile **ricostruire la tabella completa**.
 
-Esempio pratico:  
-Aggregare un flusso di eventi di visualizzazione di pagina per ottenere il numero totale di visualizzazioni per utente.  
+Esempio pratico:
+Aggregare un flusso di eventi di visualizzazione di pagina per ottenere il numero totale di visualizzazioni per utente.
 Il risultato di questa aggregazione è una **tabella**, che mantiene il conteggio aggiornato per ciascun utente.
 
 ---
 
 #### • Tabella come flusso
 
-Allo stesso modo, una **tabella** può essere vista come un’**istantanea** in un momento specifico dello stato più recente di ciascuna chiave.  
-Iterando su ogni voce della tabella (`key-value`), si può ricostruire il flusso degli aggiornamenti:  
+Allo stesso modo, una **tabella** può essere vista come un’**istantanea** in un momento specifico dello stato più recente di ciascuna chiave.
+Iterando su ogni voce della tabella (`key-value`), si può ricostruire il flusso degli aggiornamenti:
 una tabella è quindi un **flusso mascherato**, e viceversa uno stream è una **tabella mascherata**.
 
 ---
